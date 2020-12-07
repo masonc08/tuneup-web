@@ -1,30 +1,38 @@
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { COLORS } from './resources/COLORS';
 import { Navbar } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { COLORS } from './resources/COLORS';
+import StyledLink from './components/StyledLink';
+import Home from './screens/Home';
 
-function App() {
+const App = () => {
   return (
-    <AppContainer>
-      <Helmet>
-        <style>{`body { background-color: ${COLORS.black}; }`}</style>
-      </Helmet>
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Text>
-          <TitleContainer>
-            tuneup
-          </TitleContainer>
-        </Navbar.Text>
-      </Navbar>
-      <AppBody>
-        <p>
-          Your link:
-          <LinkContainer>
-            https://github.com/masonc08/TuneUp
-          </LinkContainer>
-        </p>
-      </AppBody>
-    </AppContainer>
+    <Router>
+      <AppContainer>
+        <Helmet>
+          <style>{`body { background-color: ${COLORS.black}; }`}</style>
+        </Helmet>
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Text>
+            <StyledLink to="/">
+              <TitleContainer>
+                tuneup
+              </TitleContainer>
+            </StyledLink>
+          </Navbar.Text>
+        </Navbar>
+        <AppBody>
+          <Switch>
+            <Route exact={true} path="/">
+              <Home/>
+            </Route>
+            <Route exact={true} path="/offline">
+            </Route>
+          </Switch>
+        </AppBody>
+      </AppContainer>
+    </Router>
   );
 }
 
@@ -40,17 +48,10 @@ const AppBody = styled.div`
   display: inline-block;
 `;
 
-const LinkContainer = styled.div`
-  color: ${COLORS.grey};
-  border-style: none none solid none;
-  border-bottom-color: ${COLORS.mainBlue};
-  border-bottom-width: thick;
-  padding: 1rem;
-`;
-
 const TitleContainer = styled.h1`
   color: ${COLORS.mainBlue};
   font-size: 56px;
+  display: inline-block;
 `;
 
 export default App;
