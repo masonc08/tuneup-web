@@ -17,4 +17,7 @@ const CardContainer = styled.div`
   background-color: ${COLORS.mainBlue};
   padding: 1rem;
   color: ${COLORS.white};
+  :hover {
+    background-color: ${COLORS.secondaryBlue};
+  }
 `;
