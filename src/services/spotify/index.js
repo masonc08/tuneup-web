@@ -1,20 +1,22 @@
 import { ENV } from '../../config';
 
 
-export const getCategories = (token, setCategories) => {
+export const getCategories = async token => {
   const requestOptions = {
     method: 'GET',
     redirect: 'follow'
   };
-  fetch(ENV + "v1/spotify/get_categories?key=" + token, requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      const items = result.categories.items;
-      setCategories(items);
-    })
-    .catch(error => console.error('Failed to get categories: ', error));
+  try {
+    const resp = await fetch(ENV + "v1/spotify/get_categories?key=" + token, requestOptions);
+    const jsonResp = await resp.json();
+    const items = jsonResp.categories.items;
+    console.log("Successfully fetched categories");
+    return _createOutput(items);
+  } catch (error) {
+    console.log("Failed to fetch categories");
+    return _createOutput(undefined, error);
+  }
 };
-
 
 export const getPlaylistsFromCategory = async (token, id) => {
   const requestOptions = {
@@ -65,10 +67,9 @@ export const getSpotifyToken = async () => {
     redirect: 'follow'
   };
   try {
-    // TODO: Remove hardcode for token
-    // const resp = await fetch(ENV + "v1/spotify/authorize", requestOptions);
-    // const token = resp.json().access_token;
-    const token = "abc123sampletoken";
+    const resp = await fetch(ENV + "v1/spotify/authorize", requestOptions);
+    const jsonResp = await resp.json();
+    const token = jsonResp.access_token;
     console.log("Successfully authenticated with token " + token);
     return _createOutput(token);
   } catch (error) {

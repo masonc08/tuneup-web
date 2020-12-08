@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { Navbar } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { defaultGlobalState, globalStateContext, dispatchStateContext } from './services/context';
 import { COLORS } from './resources/COLORS';
 import StyledLink from './components/StyledLink';
 import { getSpotifyToken } from './services/spotify';
@@ -10,14 +11,8 @@ import Home from './screens/Home';
 import Offline from './screens/Offline';
 
 
-const defaultGlobalState = {
-  key: ''
-};
-const globalStateContext = createContext(defaultGlobalState);
-const dispatchStateContext = createContext(undefined);
-
-
 const App = () => {
+  // TODO: Add loading screen for API calls
   const [state, dispatch] = useReducer((state, newValue) => {
       console.log(`Updating global state with value(s) ${JSON.stringify(newValue)}, arriving at state:`);
       const newState = { ...state, ...newValue }

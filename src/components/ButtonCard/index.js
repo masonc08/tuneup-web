@@ -11,6 +11,7 @@ export default ({ children }) => (
 
 const CardContainer = styled.div`
   flex-direction: column;
+  display: flex;
   border-color: ${COLORS.grey};
   border-width: thick;
   border-style: solid;
