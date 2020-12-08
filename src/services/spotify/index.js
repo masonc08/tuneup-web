@@ -7,7 +7,7 @@ export const getCategories = async token => {
     redirect: 'follow'
   };
   try {
-    const resp = await fetch(ENV + "v1/spotify/get_categories?key=" + token, requestOptions);
+    const resp = await _fetchSuccessfully(ENV + "v1/spotify/get_categories?key=" + token, requestOptions);
     const jsonResp = await resp.json();
     const items = jsonResp.categories.items;
     console.log("Successfully fetched categories");
@@ -23,12 +23,15 @@ export const getPlaylistsFromCategory = async (token, id) => {
     method: 'GET',
     redirect: 'follow'
   };
-  const response = await fetch(ENV + "v1/spotify/get_playlists_from_category?key=" + token + 
-  "&id=" + id, requestOptions)
-  if (response.ok) {
-    return response.json();
+  try {
+    const resp = await _fetchSuccessfully(ENV + "v1/spotify/get_playlists_from_category?key=" + token + 
+    "&id=" + id, requestOptions);
+    const jsonResp = await resp.json();
+    const items = jsonResp.playlists;
+    return _createOutput(items);
+  } catch (error) {
+    return _createOutput(undefined, error);
   }
-  throw response.status;
 }
 
 
@@ -38,7 +41,7 @@ export const getSongsFromPlaylist = async (token, id) => {
     redirect: 'follow'
   };
   try {
-    const response = await fetch(ENV + "v1/spotify/get_playlist?key=" + token + "&id=" + id, requestOptions)
+    const response = await _fetchSuccessfully(ENV + "v1/spotify/get_playlist?key=" + token + "&id=" + id, requestOptions)
     return response.json();
   } catch(error) {
     console.error('error', error);
@@ -51,7 +54,7 @@ export const searchPlaylists = (token, value, setResults) => {
     method: 'GET',
     redirect: 'follow'
   };
-  fetch(ENV + "v1/spotify/playlist_search?key=" + token + "&q=" + value, requestOptions)
+  _fetchSuccessfully(ENV + "v1/spotify/playlist_search?key=" + token + "&q=" + value, requestOptions)
     .then(response => response.json())
     .then(result => {
       const items = result.playlists;
@@ -67,7 +70,7 @@ export const getSpotifyToken = async () => {
     redirect: 'follow'
   };
   try {
-    const resp = await fetch(ENV + "v1/spotify/authorize", requestOptions);
+    const resp = await _fetchSuccessfully(ENV + "v1/spotify/authorize", requestOptions);
     const jsonResp = await resp.json();
     const token = jsonResp.access_token;
     console.log("Successfully authenticated with token " + token);
@@ -79,7 +82,12 @@ export const getSpotifyToken = async () => {
 };
 
 
-const _createOutput = (data, error) => ({
-  data: data,
-  error: error
-});
+const _createOutput = (data, error) => ({ data, error });
+
+const _fetchSuccessfully = async (...params) => {
+  const resp = await fetch(...params);
+  if (!resp.ok) {
+    throw resp.ok;
+  }
+  return resp
+};

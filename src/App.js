@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { Navbar } from 'react-bootstrap';
@@ -52,10 +52,10 @@ const App = () => {
             </Navbar>
             <AppBody>
               <Switch>
-                <Route exact={true} path="/">
+                <Route exact path="/">
                   <Home/>
                 </Route>
-                <Route exact={true} path="/offline">
+                <Route exact path="/offline">
                   <Offline/>
                 </Route>
               </Switch>

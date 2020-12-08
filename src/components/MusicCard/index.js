@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ButtonCard from '../ButtonCard';
 
 
-const MusicCard = ({ id, img, name, onPress }) => {
+const MusicCard = ({ img, name }) => {
   return (
     <ButtonCard>
       <ImageContainer>

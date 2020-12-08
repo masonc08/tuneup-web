@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { COLORS } from '../../resources/COLORS';
 
 
-export default ({ children }) => (
-  <CardContainer>
+export default ({ children, props }) => (
+  <CardContainer {...props} >
     { children }
   </CardContainer>
 );
