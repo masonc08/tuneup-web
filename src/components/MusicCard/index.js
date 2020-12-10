@@ -8,21 +8,16 @@ const MusicCard = ({ img, name }) => {
     <ButtonCard>
       <ImageContainer>
         <img src={img} width="300" height="300"/>
+      </ImageContainer>
       <NameContainer>
         {name}
       </NameContainer>
-      </ImageContainer>
     </ButtonCard>
   )
 }
 
 const NameContainer = styled.div`
-  position: absolute;
-  top: 75%;
-  left: 50%;
-  z-index: 10;
   margin: auto;
-  transform:translate(-50%, -50%);
 `;
 
 const ImageContainer = styled.div`

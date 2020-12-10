@@ -1,15 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import { useGlobalState } from '../../services/context';
 import MusicCard from '../../components/MusicCard';
 import DisplayGrid from '../../components/DisplayGrid';
-import { getCategories, getPlaylistsFromCategory } from '../../services/spotify';
+import { getCategories, getPlaylistsFromCategory, getSongsFromPlaylist } from '../../services/spotify';
+import { MIN_SONGS } from '../../config';
+import { formatSongs } from './logic';
+import Play from './Play';
 
 
 const Offline = () => {
+  const match = useRouteMatch();
   const [ state, _ ] = useGlobalState();
   const [ selectionStage, setSelectionStage ] = useState(0);
   const [ data, setData ] = useState([]);
+  const selectedSongs = useRef();
   const history = useHistory();
   useEffect(() => {
     const fetchCategories = async () => {
@@ -28,8 +33,9 @@ const Offline = () => {
       case 0:
         return fetchPlaylists;
       case 1:
-        return () => {
-          history.push('/offline/play');
+        return async (...args) => {
+          await handlePlaylistSelection(...args);
+          history.push(`${match.url}/play`);
         };
       default:
         console.error(`selectionStage: ${selectionStage} is unknown`);
@@ -45,29 +51,40 @@ const Offline = () => {
       setSelectionStage(1);
     }
   };
-  const categoryCards = data.map((category, i) => (
-    <div key={i} onClick={() => getNextAction()(category.id)}>
+  const handlePlaylistSelection = async (playlistId, playlistName) => {
+    const { data: songs, err } = await getSongsFromPlaylist(state.key, playlistId);
+    if (err) {
+      console.log("Could not retrieve songs");
+    } else if (songs.tracksWithPreview < MIN_SONGS) {
+      console.log("This playlist doesn't have enough songs with previews");
+    } else {
+      const formattedSongs = formatSongs(songs.tracks);
+      formattedSongs.playlistName = playlistName;
+      console.log("Songs loaded: ", formattedSongs);
+      selectedSongs.current = formattedSongs;
+    }
+  };
+  const musicCards = data.map((music, i) => (
+    <div key={i} onClick={() => getNextAction()(music.id, music.name)}>
       <MusicCard
-        img={category.image || category.icons[0].url}
-        name={category.name}
+        img={music.image || music.icons[0].url}
+        name={music.name}
       />
     </div>
   ));
 
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/offline">
-          <DisplayGrid>
-            { categoryCards }
-          </DisplayGrid>
-        </Route>
-        <Route exact path="/offline/play">
-          Selected
-        </Route>
-      </Switch>
-    </Router>
+    <Switch>
+      <Route path={`${match.path}/play`}>
+        <Play songs={selectedSongs.current}/>
+      </Route>
+      <Route path={match.path}>
+        <DisplayGrid>
+          { musicCards }
+        </DisplayGrid>
+      </Route>
+    </Switch>
   );
 }
 

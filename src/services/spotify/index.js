@@ -41,8 +41,9 @@ export const getSongsFromPlaylist = async (token, id) => {
     redirect: 'follow'
   };
   try {
-    const response = await _fetchSuccessfully(ENV + "v1/spotify/get_playlist?key=" + token + "&id=" + id, requestOptions)
-    return response.json();
+    const resp = await _fetchSuccessfully(ENV + "v1/spotify/get_playlist?key=" + token + "&id=" + id, requestOptions)
+    const jsonResp = await resp.json();
+    return _createOutput(jsonResp);
   } catch(error) {
     console.error('error', error);
   }

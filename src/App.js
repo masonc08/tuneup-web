@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { Navbar } from 'react-bootstrap';
+import Navbar from 'react-bootstrap/Navbar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { defaultGlobalState, globalStateContext, dispatchStateContext } from './services/context';
 import { COLORS } from './resources/COLORS';
@@ -14,9 +14,8 @@ import Offline from './screens/Offline';
 const App = () => {
   // TODO: Add loading screen for API calls
   const [state, dispatch] = useReducer((state, newValue) => {
-      console.log(`Updating global state with value(s) ${JSON.stringify(newValue)}, arriving at state:`);
-      const newState = { ...state, ...newValue }
-      console.log(newState);
+      const newState = { ...state, ...newValue };
+      console.log(`Updating global state with value(s): `, newValue, `arriving at state: `, newState);
       return newState;
     }, defaultGlobalState
   );
@@ -52,11 +51,11 @@ const App = () => {
             </Navbar>
             <AppBody>
               <Switch>
-                <Route exact path="/">
-                  <Home/>
-                </Route>
-                <Route exact path="/offline">
+                <Route path={`/offline`}>
                   <Offline/>
+                </Route>
+                <Route path={`/`}>
+                  <Home/>
                 </Route>
               </Switch>
             </AppBody>
@@ -72,11 +71,13 @@ const AppContainer = styled.div`
   min-height: 100vh;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
+  background: ${COLORS.black};
   color: ${COLORS.white};
 `;
 
 const AppBody = styled.div`
   display: inline-block;
+  background: ${COLORS.black};
 `;
 
 const TitleContainer = styled.h1`
