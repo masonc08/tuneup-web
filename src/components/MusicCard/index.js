@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import ButtonCard from "../ButtonCard";
 
-const MusicCard = ({ img, name, onClick }) => {
+const MusicCard = ({ img, name, onClick, onHover }) => {
   return (
-    <ButtonCard onClick={onClick}>
+    <ButtonCard onClick={onClick} onHover={onHover}>
       <ImageContainer src={img} />
       <NameContainer>{name}</NameContainer>
     </ButtonCard>

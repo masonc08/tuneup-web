@@ -45,7 +45,7 @@ const Offline = () => {
         break;
     }
   };
-  const fetchPlaylists = async (id) => {
+  const fetchPlaylists = async ({ id }) => {
     const { data: playlists, err } = await getPlaylistsFromCategory(
       state.key,
       id
@@ -57,7 +57,12 @@ const Offline = () => {
       setSelectionStage(1);
     }
   };
-  const handlePlaylistSelection = async (playlistId, playlistName) => {
+  const handlePlaylistSelection = async ({
+    id: playlistId,
+    name: playlistName,
+    image,
+    icons,
+  }) => {
     const { data: songs, err } = await getSongsFromPlaylist(
       state.key,
       playlistId
@@ -69,18 +74,19 @@ const Offline = () => {
     } else {
       const formattedSongs = formatSongs(songs.tracks);
       formattedSongs.playlistName = playlistName;
+      formattedSongs.playlistImg = image || icons[0].url;
       console.log("Songs loaded: ", formattedSongs);
       selectedSongs.current = formattedSongs;
     }
   };
   const musicCards = data.map((music, i) => (
-    // <div key={i} onClick={() => getNextAction()(music.id, music.name)}>
     <MusicCard
-      onClick={() => getNextAction()(music.id, music.name)}
+      key={i}
+      onClick={() => getNextAction()(music)}
       img={music.image || music.icons[0].url}
       name={music.name}
+      onHover={false}
     />
-    // </div>
   ));
 
   return (

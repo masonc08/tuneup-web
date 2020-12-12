@@ -2,13 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import { COLORS } from "../../resources/COLORS";
 
-export default ({ children, onClick }) => (
-  <CardContainer onClick={onClick}>{children}</CardContainer>
+export default ({ children, onClick, onHover }) => (
+  <CardContainer
+    onHover={onHover === undefined ? true : onHover}
+    onClick={onClick}
+  >
+    {children}
+  </CardContainer>
 );
 
 const CardContainer = styled.div`
   flex-direction: column;
-  display: flex;
+  display: block;
   border-color: ${COLORS.grey};
   border-width: thick;
   border-style: solid;
@@ -17,6 +22,6 @@ const CardContainer = styled.div`
   color: ${COLORS.white};
   cursor: pointer;
   :hover {
-    background-color: ${COLORS.secondaryBlue};
+    ${(props) => props.onHover && `background-color: ${COLORS.secondaryBlue}`};
   }
 `;

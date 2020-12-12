@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Modal from "react-bootstrap/Modal";
+import StyledModal from "../../../components/StyledModal";
+import MusicCard from "../../../components/MusicCard";
 import Button from "react-bootstrap/Button";
 
-const Play = ({ selectedSongs }) => {
+const Play = ({ songs }) => {
   const [showModal, setShowModal] = useState(true);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(songs);
+  }, []);
   return (
     <GameContainer>
-      <Modal show={showModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
+      <StyledModal show={showModal}>
+        <StyledModal.Header>
+          <StyledModal.Title>Get ready!</StyledModal.Title>
+        </StyledModal.Header>
+        <StyledModal.Body>
+          You selected:
+          <center>
+            <MusicCard img={songs.playlistImg} name={songs.playlistName} />
+          </center>
+        </StyledModal.Body>
+        <StyledModal.Footer>
           <Button variant="secondary" onClick={() => {}}>
-            Close
+            Back
           </Button>
           <Button variant="primary" onClick={() => {}}>
-            Save Changes
+            Start Game
           </Button>
-        </Modal.Footer>
-      </Modal>
+        </StyledModal.Footer>
+      </StyledModal>
       Selected
     </GameContainer>
   );
