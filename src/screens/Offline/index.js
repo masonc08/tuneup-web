@@ -1,19 +1,22 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
-import { useGlobalState } from '../../services/context';
-import MusicCard from '../../components/MusicCard';
-import DisplayGrid from '../../components/DisplayGrid';
-import { getCategories, getPlaylistsFromCategory, getSongsFromPlaylist } from '../../services/spotify';
-import { MIN_SONGS } from '../../config';
-import { formatSongs } from './logic';
-import Play from './Play';
-
+import React, { useEffect, useState, useRef } from "react";
+import { Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
+import { useGlobalState } from "../../services/context";
+import MusicCard from "../../components/MusicCard";
+import DisplayGrid from "../../components/DisplayGrid";
+import {
+  getCategories,
+  getPlaylistsFromCategory,
+  getSongsFromPlaylist,
+} from "../../services/spotify";
+import { MIN_SONGS } from "../../config";
+import { formatSongs } from "./logic";
+import Play from "./Play";
 
 const Offline = () => {
   const match = useRouteMatch();
-  const [ state, _ ] = useGlobalState();
-  const [ selectionStage, setSelectionStage ] = useState(0);
-  const [ data, setData ] = useState([]);
+  const [state, _] = useGlobalState();
+  const [selectionStage, setSelectionStage] = useState(0);
+  const [data, setData] = useState([]);
   const selectedSongs = useRef();
   const history = useHistory();
   useEffect(() => {
@@ -42,8 +45,11 @@ const Offline = () => {
         break;
     }
   };
-  const fetchPlaylists = async id => {
-    const { data: playlists, err } = await getPlaylistsFromCategory(state.key, id);
+  const fetchPlaylists = async (id) => {
+    const { data: playlists, err } = await getPlaylistsFromCategory(
+      state.key,
+      id
+    );
     if (err) {
       console.log("Could not retrieve categories");
     } else {
@@ -52,7 +58,10 @@ const Offline = () => {
     }
   };
   const handlePlaylistSelection = async (playlistId, playlistName) => {
-    const { data: songs, err } = await getSongsFromPlaylist(state.key, playlistId);
+    const { data: songs, err } = await getSongsFromPlaylist(
+      state.key,
+      playlistId
+    );
     if (err) {
       console.log("Could not retrieve songs");
     } else if (songs.tracksWithPreview < MIN_SONGS) {
@@ -66,27 +75,24 @@ const Offline = () => {
   };
   const musicCards = data.map((music, i) => (
     // <div key={i} onClick={() => getNextAction()(music.id, music.name)}>
-      <MusicCard
-        onClick={() => getNextAction()(music.id, music.name)}
-        img={music.image || music.icons[0].url}
-        name={music.name}
-      />
+    <MusicCard
+      onClick={() => getNextAction()(music.id, music.name)}
+      img={music.image || music.icons[0].url}
+      name={music.name}
+    />
     // </div>
   ));
-
 
   return (
     <Switch>
       <Route path={`${match.path}/play`}>
-        <Play songs={selectedSongs.current}/>
+        <Play songs={selectedSongs.current} />
       </Route>
       <Route path={match.path}>
-        <DisplayGrid>
-          { musicCards }
-        </DisplayGrid>
+        <DisplayGrid>{musicCards}</DisplayGrid>
       </Route>
     </Switch>
   );
-}
+};
 
 export default Offline;

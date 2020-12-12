@@ -1,12 +1,11 @@
-import { createContext, useContext } from 'react';
-
+import { createContext, useContext } from "react";
 
 export const defaultGlobalState = {
-  key: ''
+  key: "",
 };
 export const globalStateContext = createContext(defaultGlobalState);
 export const dispatchStateContext = createContext(undefined);
 export const useGlobalState = () => [
   useContext(globalStateContext),
-  useContext(dispatchStateContext)
+  useContext(dispatchStateContext),
 ];

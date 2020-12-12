@@ -1,21 +1,15 @@
-import React from 'react'
-import styled from 'styled-components';
-import ButtonCard from '../ButtonCard';
-
+import React from "react";
+import styled from "styled-components";
+import ButtonCard from "../ButtonCard";
 
 const MusicCard = ({ img, name, onClick }) => {
   return (
     <ButtonCard onClick={onClick}>
-      <ImageContainer
-        src={img}
-      />
-      <NameContainer>
-        {name}
-      </NameContainer>
+      <ImageContainer src={img} />
+      <NameContainer>{name}</NameContainer>
     </ButtonCard>
-  )
-}
-
+  );
+};
 
 const NameContainer = styled.div`
   width: 300px;
@@ -32,4 +26,4 @@ const ImageContainer = styled.img`
   width: 300px;
 `;
 
-export default MusicCard
+export default MusicCard;

@@ -1,12 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import { COLORS } from '../../resources/COLORS';
-
+import React from "react";
+import styled from "styled-components";
+import { COLORS } from "../../resources/COLORS";
 
 export default ({ children, onClick }) => (
-  <CardContainer onClick={onClick} >
-    { children }
-  </CardContainer>
+  <CardContainer onClick={onClick}>{children}</CardContainer>
 );
 
 const CardContainer = styled.div`

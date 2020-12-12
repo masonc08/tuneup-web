@@ -1,5 +1,5 @@
-import { COLORS } from '../../resources/COLORS';
-import styled from 'styled-components';
+import { COLORS } from "../../resources/COLORS";
+import styled from "styled-components";
 
 export default styled.div`
   color: ${COLORS.grey};

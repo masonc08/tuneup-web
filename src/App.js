@@ -1,24 +1,31 @@
-import React, { useEffect, useReducer } from 'react';
-import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
-import Navbar from 'react-bootstrap/Navbar';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { defaultGlobalState, globalStateContext, dispatchStateContext } from './services/context';
-import { COLORS } from './resources/COLORS';
-import StyledLink from './components/StyledLink';
-import { getSpotifyToken } from './services/spotify';
-import Home from './screens/Home';
-import Offline from './screens/Offline';
-
+import React, { useEffect, useReducer } from "react";
+import styled from "styled-components";
+import { Helmet } from "react-helmet";
+import Navbar from "react-bootstrap/Navbar";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  defaultGlobalState,
+  globalStateContext,
+  dispatchStateContext,
+} from "./services/context";
+import { COLORS } from "./resources/COLORS";
+import StyledLink from "./components/StyledLink";
+import { getSpotifyToken } from "./services/spotify";
+import Home from "./screens/Home";
+import Offline from "./screens/Offline";
 
 const App = () => {
   // TODO: Add loading screen for API calls
   const [state, dispatch] = useReducer((state, newValue) => {
-      const newState = { ...state, ...newValue };
-      console.log(`Updating global state with value(s): `, newValue, `arriving at state: `, newState);
-      return newState;
-    }, defaultGlobalState
-  );
+    const newState = { ...state, ...newValue };
+    console.log(
+      `Updating global state with value(s): `,
+      newValue,
+      `arriving at state: `,
+      newState
+    );
+    return newState;
+  }, defaultGlobalState);
   useEffect(() => {
     const authenticate = async () => {
       const { data: token, err } = await getSpotifyToken();
@@ -27,10 +34,9 @@ const App = () => {
       } else {
         dispatch({ key: token });
       }
-    }
+    };
     authenticate();
   }, []);
-
 
   return (
     <globalStateContext.Provider value={state}>
@@ -48,18 +54,16 @@ const App = () => {
                 className="d-inline-block align-top"
               />
               <Navbar.Brand href="/">
-                <TitleContainer>
-                  tuneup
-                </TitleContainer>
+                <TitleContainer>tuneup</TitleContainer>
               </Navbar.Brand>
             </Navbar>
             <AppBody>
               <Switch>
                 <Route path={`/offline`}>
-                  <Offline/>
+                  <Offline />
                 </Route>
                 <Route path={`/`}>
-                  <Home/>
+                  <Home />
                 </Route>
               </Switch>
             </AppBody>
@@ -68,7 +72,7 @@ const App = () => {
       </dispatchStateContext.Provider>
     </globalStateContext.Provider>
   );
-}
+};
 
 const AppContainer = styled.div`
   text-align: center;

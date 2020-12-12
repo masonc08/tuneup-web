@@ -1,5 +1,7 @@
-const shuffle = array => {
-  let currentIndex = array.length, temporaryValue, randomIndex;
+const shuffle = (array) => {
+  let currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
   while (0 !== currentIndex) {
     randomIndex = ~~(Math.random() * currentIndex);
     currentIndex -= 1;
@@ -8,7 +10,7 @@ const shuffle = array => {
     array[randomIndex] = temporaryValue;
   }
   return array;
-}
+};
 /*
   # TODO: Consider moving this computation to BE
   Expected output:
@@ -22,7 +24,7 @@ const shuffle = array => {
     ...
   ]
 */
-export const formatSongs = songs => {
+export const formatSongs = (songs) => {
   const shuffledSongs = shuffle(songs);
   for (let i = 0; i < shuffledSongs.length; i++) {
     const arr = [];
