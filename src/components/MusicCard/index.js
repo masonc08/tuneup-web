@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import ButtonCard from '../ButtonCard';
 
 
-const MusicCard = ({ img, name }) => {
+const MusicCard = ({ img, name, onClick }) => {
   return (
-    <ButtonCard>
-      <ImageContainer>
-        <img src={img} width="300" height="300"/>
-      </ImageContainer>
+    <ButtonCard onClick={onClick}>
+      <ImageContainer
+        src={img}
+      />
       <NameContainer>
         {name}
       </NameContainer>
@@ -16,12 +16,20 @@ const MusicCard = ({ img, name }) => {
   )
 }
 
+
 const NameContainer = styled.div`
-  margin: auto;
+  width: 300px;
+  height: 75px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 0.5em;
+  font-size: 2vh;
 `;
 
-const ImageContainer = styled.div`
-  position: relative;
+const ImageContainer = styled.img`
+  height: 300px;
+  width: 300px;
 `;
 
 export default MusicCard

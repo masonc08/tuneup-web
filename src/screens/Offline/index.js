@@ -65,12 +65,13 @@ const Offline = () => {
     }
   };
   const musicCards = data.map((music, i) => (
-    <div key={i} onClick={() => getNextAction()(music.id, music.name)}>
+    // <div key={i} onClick={() => getNextAction()(music.id, music.name)}>
       <MusicCard
+        onClick={() => getNextAction()(music.id, music.name)}
         img={music.image || music.icons[0].url}
         name={music.name}
       />
-    </div>
+    // </div>
   ));
 
 

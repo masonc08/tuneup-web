@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { COLORS } from '../../resources/COLORS';
 
 
-export default ({ children, props }) => (
-  <CardContainer {...props} >
+export default ({ children, onClick }) => (
+  <CardContainer onClick={onClick} >
     { children }
   </CardContainer>
 );
@@ -18,6 +18,7 @@ const CardContainer = styled.div`
   background-color: ${COLORS.mainBlue};
   padding: 1rem;
   color: ${COLORS.white};
+  cursor: pointer;
   :hover {
     background-color: ${COLORS.secondaryBlue};
   }

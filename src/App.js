@@ -40,14 +40,18 @@ const App = () => {
             <Helmet>
               <style>{`body { background-color: ${COLORS.black}; }`}</style>
             </Helmet>
-            <Navbar bg="dark" variant="dark">
-              <Navbar.Text>
-                <StyledLink to="/">
-                  <TitleContainer>
-                    tuneup
-                  </TitleContainer>
-                </StyledLink>
-              </Navbar.Text>
+            <Navbar bg={COLORS.black} variant="dark">
+              <img
+                src="/tuneup.png"
+                width="75"
+                height="75"
+                className="d-inline-block align-top"
+              />
+              <Navbar.Brand href="/">
+                <TitleContainer>
+                  tuneup
+                </TitleContainer>
+              </Navbar.Brand>
             </Navbar>
             <AppBody>
               <Switch>
