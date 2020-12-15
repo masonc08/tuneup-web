@@ -30,12 +30,12 @@ export const formatSongs = (songs) => {
     const arr = [];
     const correctIndex = ~~(Math.random() * 3);
     while (arr.length < 4) {
-      if (correctIndex == arr.length) {
+      if (correctIndex === arr.length) {
         arr.push(i);
         continue;
       }
       const randNum = ~~(Math.random() * shuffledSongs.length);
-      if (arr.indexOf(randNum) === -1 && randNum != correctIndex) {
+      if (arr.indexOf(randNum) === -1 && randNum !== correctIndex) {
         arr.push(randNum);
       }
     }

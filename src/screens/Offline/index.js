@@ -85,7 +85,6 @@ const Offline = () => {
       onClick={() => getNextAction()(music)}
       img={music.image || music.icons[0].url}
       name={music.name}
-      onHover={false}
     />
   ));
 

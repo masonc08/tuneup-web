@@ -9,7 +9,6 @@ import {
   dispatchStateContext,
 } from "./services/context";
 import { COLORS } from "./resources/COLORS";
-import StyledLink from "./components/StyledLink";
 import { getSpotifyToken } from "./services/spotify";
 import Home from "./screens/Home";
 import Offline from "./screens/Offline";
@@ -49,6 +48,7 @@ const App = () => {
             <Navbar bg={COLORS.black} variant="dark">
               <img
                 src="/tuneup.png"
+                alt="tuneup"
                 width="75"
                 height="75"
                 className="d-inline-block align-top"
