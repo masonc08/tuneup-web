@@ -27,7 +27,6 @@ ButtonCard.defaultProps = {
 };
 
 const NameContainer = styled.div`
-  width: 300px;
   height: 75px;
   display: flex;
   align-items: center;

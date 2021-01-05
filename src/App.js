@@ -41,51 +41,44 @@ const App = () => {
     <globalStateContext.Provider value={state}>
       <dispatchStateContext.Provider value={dispatch}>
         <Router>
-          <AppContainer>
-            <Helmet>
-              <style>{`body { background-color: ${COLORS.black}; }`}</style>
-            </Helmet>
-            <Navbar bg={COLORS.black} variant="dark">
-              <img
-                src="/tuneup.png"
-                alt="tuneup"
-                width="75"
-                height="75"
-                className="d-inline-block align-top"
-              />
-              <Navbar.Brand href="/">
-                <TitleContainer>tuneup</TitleContainer>
-              </Navbar.Brand>
-            </Navbar>
-            <AppBody>
-              <Switch>
-                <Route path={`/offline`}>
-                  <Offline />
-                </Route>
-                <Route path={`/`}>
-                  <Home />
-                </Route>
-              </Switch>
-            </AppBody>
-          </AppContainer>
+          <Helmet>
+            <style>{`body { background-color: ${COLORS.black}; }`}</style>
+          </Helmet>
+          <Navbar bg={COLORS.black} variant="dark">
+            <img
+              src="/tuneup.png"
+              alt="tuneup"
+              width="75"
+              height="75"
+              className="d-inline-block align-top"
+            />
+            <Navbar.Brand href="/">
+              <TitleContainer>tuneup</TitleContainer>
+            </Navbar.Brand>
+          </Navbar>
+          <AppBody>
+            <Switch>
+              <Route path={`/offline`}>
+                <Offline />
+              </Route>
+              <Route path={`/`}>
+                <Home />
+              </Route>
+            </Switch>
+          </AppBody>
         </Router>
       </dispatchStateContext.Provider>
     </globalStateContext.Provider>
   );
 };
 
-const AppContainer = styled.div`
+const AppBody = styled.div`
   text-align: center;
   min-height: 100vh;
   flex-direction: column;
   font-size: calc(10px + 2vmin);
   background: ${COLORS.black};
   color: ${COLORS.white};
-`;
-
-const AppBody = styled.div`
-  display: inline-block;
-  background: ${COLORS.black};
 `;
 
 const TitleContainer = styled.h1`
